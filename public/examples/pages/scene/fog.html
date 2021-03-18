@@ -1,0 +1,48 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let key = '0f7c1d161d7352116a21aacf0e9f44c1'
+    let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
+      key,
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    let layer = new DC.TilesetLayer('layer')
+    viewer.addLayer(layer)
+    let tileset = new DC.Tileset(
+      'http://data.marsgis.cn/3dtiles/max-ytlhz/tileset.json'
+    )
+    layer.addOverlay(tileset)
+    viewer.use(new DC.Weather())
+    viewer.weather.fog.enable = true
+    viewer.flyTo(tileset)
+    addGuiController() // add controller
+
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable: true,
+      far:2000,
+      color: "#000000",
+    }
+    let gui = new dat.GUI();
+    gui.add(controls,'enable').onChange(value=>{
+      viewer.weather.fog.enable = value
+    })
+
+    gui.add(controls,'far',0,20000).step(100).onChange(value=>{
+      viewer.weather.fog.fogByDistance = {
+        far : value
+      }
+    })
+    gui.addColor(controls,'color').onChange(value=>{
+      viewer.weather.fog.color = Cesium.Color.fromCssColorString(value)
+    })
+  }
+
+  initViewer()
+</script>

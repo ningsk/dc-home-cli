@@ -1,0 +1,30 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function changeEnable(checked){
+    viewer.zoomController.enable = Boolean(checked)
+  }
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createCoordImageryLayer()
+    viewer.addBaseLayer(baselayer)
+    viewer.compass.enable = true
+    viewer.zoomController.enable = true
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable :true,
+    }
+    let gui = new dat.GUI();
+    gui.add(controls,'enable',).onChange(value=>{
+      viewer.zoomController.enable = value
+    })
+  }
+
+
+  initViewer()
+</script>

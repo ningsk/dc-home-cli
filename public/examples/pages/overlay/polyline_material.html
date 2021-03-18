@@ -1,0 +1,72 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2021-03-17 16:00:02
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2021-03-18 08:59:10
+-->
+<div id="viewer-container"></div>
+<script>
+    let viewer = undefined
+
+    function initViewer() {
+        viewer = new DC.Viewer('viewer-container')
+        let key = '0f7c1d161d7352116a21aacf0e9f44c1'
+        let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
+            key,
+            style: 'img'
+        })
+        viewer.addBaseLayer(baselayer)
+        let layer = new DC.VectorLayer('layer')
+        viewer.addLayer(layer)
+
+        layer.addOverlay(
+            new DC.Polyline('-75, 35; -125, 35').setStyle({
+                width: 2,
+                material: Cesium.Color.RED,
+                clampToGround: true
+            })
+        )
+
+        layer.addOverlay(
+            new DC.Polyline('-75, 37; -125, 37').setStyle({
+                width: 2,
+                material: new DC.PolylineGlowMaterialProperty({
+                    glowPower: 0.2,
+                    taperPower: 0.5,
+                    color: Cesium.Color.CORNFLOWERBLUE
+                })
+            })
+        )
+
+        layer.addOverlay(
+            new DC.Polyline('-75,39,250000; -125,39,250000').setStyle({
+                width: 2,
+                material: new DC.PolylineOutlineMaterialProperty({
+                    color: Cesium.Color.ORANGE,
+                    outlineWidth: 2,
+                    outlineColor: Cesium.Color.BLACK
+                })
+            })
+        )
+
+        layer.addOverlay(
+            new DC.Polyline('-75,43,500000; -125,43,500000').setStyle({
+                width: 2,
+                material: new DC.PolylineArrowMaterialProperty(Cesium.Color.PURPLE)
+            })
+        )
+
+        layer.addOverlay(
+            new DC.Polyline('-75,45,500000; -125,45,500000').setStyle({
+                width: 2,
+                material: new DC.PolylineDashMaterialProperty({
+                    color: Cesium.Color.CYAN
+                })
+            })
+        )
+        material: viewer.flyTo(layer)
+    }
+    initViewer()
+</script>

@@ -1,0 +1,33 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: sueRimn
+ * @Date: 2021-03-17 16:00:02
+ * @LastEditors: sueRimn
+ * @LastEditTime: 2021-03-17 16:20:18
+-->
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createAmapImageryLayer()
+    viewer.addBaseLayer(baselayer, {
+      iconUrl: 'examples/images/icon/elec.png',
+      name: '电子'
+    })
+
+    let baselayer_img = DC.ImageryLayerFactory.createAmapImageryLayer({
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer_img, {
+      iconUrl: 'examples/images/icon/img.png',
+      name: '地图'
+    })
+
+    viewer.zoomToPosition(
+      new DC.Position(105.565571, 31.984708, 15362816, 0, -90)
+    )
+  }
+  initViewer()
+</script>

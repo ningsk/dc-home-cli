@@ -1,0 +1,15 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createAmapImageryLayer({
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.on(DC.SceneEventType.CAMERA_MOVE_END, e => {
+      console.log(e)
+    })
+  }
+  initViewer()
+</script>

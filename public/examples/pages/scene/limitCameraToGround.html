@@ -1,0 +1,14 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createBaiduImageryLayer({
+      style: 'dark'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.limitCameraToGround()
+  }
+  initViewer()
+</script>

@@ -1,0 +1,30 @@
+<div id="viewer-container"></div>
+
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createBaiduImageryLayer({
+      style: 'dark'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.hawkeyeMap.enable = true
+    viewer.hawkeyeMap.addBaseLayer(
+      DC.ImageryLayerFactory.createBaiduImageryLayer()
+    )
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable :true,
+    }
+    let gui = new dat.GUI();
+    gui.add(controls,'enable',).onChange(value=>{
+      viewer.hawkeyeMap.enable = value
+    })
+  }
+
+  initViewer()
+</script>

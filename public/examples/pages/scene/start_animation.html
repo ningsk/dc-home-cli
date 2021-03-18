@@ -1,0 +1,28 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let key = '1c3ff1358b17417f1782dd1ae7bdd00a'
+    let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
+      key,
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.use(new DC.Weather())
+    viewer.weather.cloud.enable = true
+    viewer.weather.cloud.rotateAmount=0.04
+    let globeRotate = new DC.GlobeRotate(viewer,
+      {
+        duration:3,
+        callback: () => {
+          viewer.flyToPosition(
+            new DC.Position(120.38105869, 31.10115627, 1e5, 0, -90)
+          )
+        }
+      })
+    globeRotate.start()
+  }
+  initViewer()
+</script>

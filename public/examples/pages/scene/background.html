@@ -1,0 +1,20 @@
+<div id="viewer-container" style="background:green"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container', {
+      orderIndependentTranslucency: false,
+      contextOptions: {
+        webgl: {
+          alpha: true
+        }
+      }
+    }).setOptions({
+      showMoon: false,
+      showSun: false,
+      showSkyBox: false
+    })
+  }
+  initViewer()
+</script>

@@ -1,0 +1,34 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let key = '0f7c1d161d7352116a21aacf0e9f44c1'
+    let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
+      key,
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.use(new DC.Weather())
+    viewer.weather.cloud.enable = true
+    viewer.weather.cloud.rotateAmount=0.02
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable: true,
+      rotateAmount : 0.02,
+    }
+    let gui = new dat.GUI();
+    gui.add(controls,'enable').onChange(value=>{
+      viewer.weather.cloud.enable = value
+    })
+
+    gui.add(controls,'rotateAmount',0,0.1).step(0.01).onChange(value=>{
+      viewer.weather.cloud.rotateAmount = value
+    })
+  }
+  initViewer()
+</script>

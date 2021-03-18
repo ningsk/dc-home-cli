@@ -1,0 +1,16 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createAmapImageryLayer({
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    let layer = new DC.KmlLayer('layer', 'examples/data/facilities.kml')
+    viewer.addLayer(layer)
+    viewer.flyTo(layer)
+  }
+  initViewer()
+</script>

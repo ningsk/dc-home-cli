@@ -1,0 +1,35 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer_midnight = DC.ImageryLayerFactory.createBaiduImageryLayer({
+      style: 'midnight'
+    })
+    viewer.addBaseLayer(baselayer_midnight)
+    viewer.use(new DC.Effect())
+    viewer.effect.silhouette.enable= true
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable:true,
+      color: '#00ff00',
+      length: 0.5,
+    }
+    let gui = new dat.GUI()
+    gui.add(controls,'enable').onChange(value=>{
+      viewer.effect.silhouette.enable=value
+    })
+    gui.addColor(controls,'color').onChange(value=>{
+      viewer.effect.silhouette.color= Cesium.Color.fromCssColorString(value)
+    })
+    gui.add(controls,'length',0,5).step(0.1).onChange(value=>{
+      viewer.effect.silhouette.length=value
+    })
+
+  }
+  initViewer()
+</script>

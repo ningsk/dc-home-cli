@@ -1,0 +1,46 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer_midnight = DC.ImageryLayerFactory.createBaiduImageryLayer({
+      style: 'midnight'
+    })
+    viewer.addBaseLayer(baselayer_midnight)
+    viewer.use(new DC.Effect())
+    viewer.effect.bloom.enable= true
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable:true,
+      contrast: 128,
+      brightness: -0.3,
+      delta: 1,
+      sigma: 3.8,
+      stepSize: 5,
+    }
+    let gui = new dat.GUI()
+    gui.add(controls,'enable').onChange(value=>{
+      viewer.effect.bloom.enable=value
+    })
+    gui.add(controls,'contrast',0,255).step(1).onChange(value=>{
+      viewer.effect.bloom.contrast=value
+    })
+    gui.add(controls,'brightness',-5,5).step(0.1).onChange(value=>{
+      viewer.effect.bloom.brightness=value
+    })
+    gui.add(controls,'delta',0,5).step(0.1).onChange(value=>{
+      viewer.effect.bloom.delta=value
+    })
+    gui.add(controls,'sigma',0,5).step(0.1).onChange(value=>{
+      viewer.effect.bloom.delta=value
+    })
+    gui.add(controls,'stepSize',0,10).step(0.1).onChange(value=>{
+      viewer.effect.bloom.delta=value
+    })
+  }
+  initViewer()
+</script>

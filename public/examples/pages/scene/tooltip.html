@@ -1,0 +1,30 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let key = '0f7c1d161d7352116a21aacf0e9f44c1'
+    let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
+      key,
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    viewer.tooltip.enable = true
+    viewer.on(DC.MouseEventType.MOUSE_MOVE, e => {
+      viewer.tooltip.showAt(e.windowPosition, '我是鼠标提示')
+    })
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      enable :true,
+    }
+    let gui = new dat.GUI();
+    gui.add(controls,'enable',).onChange(value=>{
+      viewer.tooltip.enable = value
+    })
+  }
+  initViewer()
+</script>

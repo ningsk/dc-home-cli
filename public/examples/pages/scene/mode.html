@@ -1,0 +1,24 @@
+<div id="viewer-container"></div>
+<script>
+  let viewer = undefined
+
+  function initViewer() {
+    viewer = new DC.Viewer('viewer-container')
+    let baselayer = DC.ImageryLayerFactory.createAmapImageryLayer({
+      style: 'img'
+    })
+    viewer.addBaseLayer(baselayer)
+    addGuiController() // add controller
+  }
+
+  function addGuiController(){
+    let controls = {
+      mode:3
+    }
+    let gui = new dat.GUI()
+    gui.add(controls,'mode',{'2D':2,'2.5D':2.5,'3D':3}).onChange(value=>{
+      viewer.changeSceneMode(Number(value),2)
+    })
+  }
+  initViewer()
+</script>
