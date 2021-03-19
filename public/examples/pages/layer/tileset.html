@@ -4,27 +4,48 @@
  * @Author: sueRimn
  * @Date: 2021-03-17 16:00:02
  * @LastEditors: sueRimn
- * @LastEditTime: 2021-03-17 16:40:23
+ * @LastEditTime: 2021-03-19 11:37:13
 -->
 <div id="viewer-container"></div>
 <script>
-  let viewer = undefined
-  function initViewer() {
-    viewer = new DC.Viewer('viewer-container')
-    let key = '0f7c1d161d7352116a21aacf0e9f44c1'
-    let baselayer = DC.ImageryLayerFactory.createTdtImageryLayer({
-      key,
-      style: 'img'
-    })
-    viewer.addBaseLayer(baselayer)
-    let layer = new DC.TilesetLayer('layer')
-    viewer.addLayer(layer)
-    let tileset = new DC.Tileset(
-      'http://earthsdk.com/v/last/Apps/assets/dayanta/tileset.json'
-    )
-    tileset.setHeight(-420)
-    layer.addOverlay(tileset)
-    viewer.flyTo(tileset)
-  }
-  initViewer()
+        let viewer = undefined
+    function initViewer() {
+        viewer = new DC.Viewer('viewer-container')
+        let key = '9ae78c51a0a28f06444d541148496e36'
+
+        let vec = DC.ImageryLayerFactory.createTdtImageryLayer({
+            key
+        })
+        viewer.addBaseLayer(vec, {
+            name: '电子',
+            iconUrl: 'examples/images/icon/elec.png'
+        })
+
+        viewer.on(DC.MouseEventType.CLICK, e => {
+            let feature = e?.target
+            if (!feature) return 
+            let propertyNames = feature.getPropertyNames();
+            let length = propertyNames.length;
+            for (let i = 0; i < length; ++i) {
+                let propertyName = propertyNames[i];
+                console.log(propertyName + ': ' + feature.getProperty(propertyName));
+            }
+        })
+        let layer = new DC.TilesetLayer('layer')
+        viewer.addLayer(layer)
+        let tileset = new DC.Tileset(
+            'http://192.168.80.121:8085/管线测试数据/zw/container/tileset.json'
+        )
+        tileset.setHeight(0)
+        layer.addOverlay(tileset)
+        viewer.flyTo(tileset)
+    }
+    initViewer()
+
+
+
+
+
+
+
 </script>
